@@ -27,7 +27,7 @@
 
 </div>
 
-<div class="js-result modal fade" tabindex="-1" role="dialog">
+<div id="js-result" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,7 +35,11 @@
                 <h4 class="modal-title">Oslovujeme, voláme!</h4>
             </div>
             <div class="modal-body">
-                <p>Správné oslovení uživatele je: <strong class="js-result-name">Tomáši</strong></p>
+                <p>Správné oslovení uživatele je: <strong id="js-result-name">Tomáši</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+                <button type="button" class="btn btn-primary" data-clipboard-target="#js-result-name">Zkopírovat do schránky</button>
             </div>
         </div><!-- /modal-content -->
     </div><!-- /modal-dialog -->
@@ -44,8 +48,15 @@
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function () {
+
+    // kopirovani do schranky
+    new Clipboard('.btn');
+
+    // Ajax XML
     $(".js-names").submit(function(){
         var userName = $("#in-name").val();
 
@@ -58,8 +69,9 @@ $(document).ready(function () {
                 var selector = 'item[name="'+ userName +'"]';
                 var name = $(xml).find(selector).attr('vokativ');
 
-                $(".js-result-name").text(name.toString());
-                $('.js-result').modal('show')
+                // zobrazeni vysledku
+                $("#js-result-name").text(name.toString());
+                $('#js-result').modal('show')
             }
         });
 
